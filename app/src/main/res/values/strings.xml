@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ft_hangouts</string>
+    <string name="male_gender">Male</string>
+    <string name="female_gender">Female</string>
+    <string name="other_gender">Other</string>
+    <string name="unknown_gender">Unknown</string>
 </resources>
