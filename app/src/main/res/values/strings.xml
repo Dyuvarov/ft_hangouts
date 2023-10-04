@@ -4,4 +4,5 @@
     <string name="female_gender">Female</string>
     <string name="other_gender">Other</string>
     <string name="unknown_gender">Unknown</string>
+    <string name="add_contact_btn_description">Add contact</string>
 </resources>
