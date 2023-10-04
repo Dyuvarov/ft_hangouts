@@ -1,8 +1,10 @@
 package com.ugreyiro.ft_hangouts
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
 import com.ugreyiro.ft_hangouts.adapter.ContactListAdapter
 import com.ugreyiro.ft_hangouts.model.Contact
 import com.ugreyiro.ft_hangouts.model.Gender
@@ -15,11 +17,26 @@ class MainActivity : AppCompatActivity() {
         Contact(id = 2, phoneNumber = "815812512512", firstName = "Tanya", lastName = "Lastname", gender = Gender.FEMALE)
     )
 
+    private lateinit var contactsListView : ListView
+    private lateinit var addContactBtn : ImageButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val contactsView = findViewById<ListView>(R.id.contactsList)
-        contactsView.adapter = ContactListAdapter(this, contacts)
+        initContactsListView()
+        initAddContactButton()
+    }
+
+    private fun initContactsListView() {
+        contactsListView = findViewById(R.id.contactsList)
+        contactsListView.adapter = ContactListAdapter(this, contacts)
+    }
+
+    private fun initAddContactButton() {
+        addContactBtn = findViewById(R.id.addContactBtn)
+        addContactBtn.setOnClickListener {
+            startActivity(Intent(this, ContactActivity::class.java))
+        }
     }
 }
