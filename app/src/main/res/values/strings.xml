@@ -1,8 +1,26 @@
 <resources>
     <string name="app_name">ft_hangouts</string>
+
+    <!-- titles -->
+    <string name="phone_number_title">Phone number*</string>
+    <string name="first_name_title">First name*</string>
+    <string name="last_name_title">Last name</string>
+    <string name="gender_title">Gender</string>
+    <string name="comment_title">Comment</string>
     <string name="male_gender">Male</string>
     <string name="female_gender">Female</string>
     <string name="other_gender">Other</string>
     <string name="unknown_gender">Unknown</string>
+
+    <!-- Buttons -->
+    <string name="save_btn_text">Save</string>
     <string name="add_contact_btn_description">Add contact</string>
+
+    <!-- errors -->
+    <string name="contact_create_db_error">Error: Can\'t crate contact</string>
+
+    <!-- user warnings -->
+    <string name="field_required">Field required</string>
+    <string name="cant_load_contacts_list">Can\'t load list of contacts</string>
+    <string name="phone_number_already_exists">Contact with this phone number already exists</string>
 </resources>
