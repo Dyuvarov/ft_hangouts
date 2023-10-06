@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.ugreyiro.ft_hangouts.R
-import com.ugreyiro.ft_hangouts.model.Contact
 import com.ugreyiro.ft_hangouts.model.ContactListDto
 import com.ugreyiro.ft_hangouts.model.fullName
 
@@ -19,8 +18,9 @@ class ContactListAdapter(
         val cv = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_contact, null)
         val contact = getItem(position)
         if (contact != null) {
-            cv.findViewById<TextView>(R.id.contactFullName).text = contact.fullName()
-            cv.findViewById<TextView>(R.id.contactPhoneNumber).text = contact.phoneNumber
+            cv.findViewById<TextView>(R.id.contactFullNameTextView).text = contact.fullName()
+            cv.findViewById<TextView>(R.id.contactPhoneNumberTextView).text = contact.phoneNumber
+            cv.findViewById<TextView>(R.id.contactIdTextView).text = contact.id.toString()
         }
         return cv
     }

@@ -6,15 +6,20 @@
     android:padding="4dp">
 
     <TextView
-        android:id="@+id/contactFullName"
+        android:id="@+id/contactFullNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="fullName"
         android:textColor="@color/black"
         android:textStyle="bold"/>
     <TextView
-        android:id="@+id/contactPhoneNumber"
+        android:id="@+id/contactPhoneNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="phoneNumber"/>
+    <TextView
+        android:id="@+id/contactIdTextView"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

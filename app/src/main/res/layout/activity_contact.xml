@@ -6,66 +6,71 @@
     android:layout_height="match_parent"
     tools:context=".ContactActivity">
 
-
+    <TextView
+        android:id="@+id/contactIdTextView"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <EditText
-        android:id="@+id/editTxtPhoneNumber"
+        android:id="@+id/phoneNumberEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:hint="+1234567890"
         android:ems="10"
         android:inputType="phone"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/txtViewPhoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumberTetView" />
 
     <EditText
-        android:id="@+id/editTxtFirstName"
+        android:id="@+id/firstNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/txxtViewFirstName" />
+        app:layout_constraintTop_toBottomOf="@+id/firstNameTetView" />
 
     <EditText
-        android:id="@+id/editTxtLastName"
+        android:id="@+id/lastNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/txtViewLastName" />
+        app:layout_constraintTop_toBottomOf="@+id/lastNameTetView" />
 
     <RadioGroup
-        android:id="@+id/radioGroupGender"
+        android:id="@+id/genderRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/txtViewGender">
+        app:layout_constraintTop_toBottomOf="@+id/genderTetView">
 
         <RadioButton
-            android:id="@+id/radioBtnMaleGender"
+            android:id="@+id/maleGenderRadioBtn"
             android:tag=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/male_gender" />
 
         <RadioButton
-            android:id="@+id/radioBtnFemaleGender"
+            android:id="@+id/femaleGenderRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/female_gender" />
 
         <RadioButton
-            android:id="@+id/radioBtnOtherGender"
+            android:id="@+id/otherGenderRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/other_gender" />
 
         <RadioButton
-            android:id="@+id/radioBtnUnknownGender"
+            android:id="@+id/unknownGenderRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
@@ -73,17 +78,17 @@
     </RadioGroup>
 
     <EditText
-        android:id="@+id/editTxtComment"
+        android:id="@+id/commentEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/txtViewComment" />
+        app:layout_constraintTop_toBottomOf="@+id/commentTetView" />
 
     <TextView
-        android:id="@+id/txtViewPhoneNumber"
+        android:id="@+id/phoneNumberTetView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/phone_number_title"
@@ -91,40 +96,40 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <TextView
-        android:id="@+id/txxtViewFirstName"
+        android:id="@+id/firstNameTetView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/first_name_title"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtPhoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumberEditText" />
 
     <TextView
-        android:id="@+id/txtViewLastName"
+        android:id="@+id/lastNameTetView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/last_name_title"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtFirstName" />
+        app:layout_constraintTop_toBottomOf="@+id/firstNameEditText" />
 
     <TextView
-        android:id="@+id/txtViewGender"
+        android:id="@+id/genderTetView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/gender_title"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtLastName" />
+        app:layout_constraintTop_toBottomOf="@+id/lastNameEditText" />
 
     <TextView
-        android:id="@+id/txtViewComment"
+        android:id="@+id/commentTetView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/comment_title"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupGender" />
+        app:layout_constraintTop_toBottomOf="@+id/genderRadioGroup" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -141,7 +146,7 @@
         app:layout_constraintGuide_begin="90dp" />
 
     <Button
-        android:id="@+id/buttonSave"
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"

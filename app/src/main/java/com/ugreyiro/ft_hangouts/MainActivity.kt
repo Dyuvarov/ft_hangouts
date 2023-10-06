@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ugreyiro.ft_hangouts.adapter.ContactListAdapter
 import com.ugreyiro.ft_hangouts.db.ContactsDatabaseHelper
-import com.ugreyiro.ft_hangouts.model.Contact
-import com.ugreyiro.ft_hangouts.model.Gender
-import java.lang.Exception
+import com.ugreyiro.ft_hangouts.exception.EntryNotFoundException
 
 class MainActivity : AppCompatActivity() {
     private lateinit var contactsListView : ListView
@@ -41,6 +40,14 @@ class MainActivity : AppCompatActivity() {
         }
         contactsListView = findViewById(R.id.contactsList)
         contactsListView.adapter = ContactListAdapter(this, contacts)
+
+        contactsListView.setOnItemClickListener { parent, view, position, id ->
+            val contactId = view
+                .findViewById<TextView>(R.id.contactIdTextView).text
+                .toString()
+                .toLong()
+            openContactForm(contactId)
+        }
     }
 
     private fun initAddContactButton() {
@@ -48,5 +55,27 @@ class MainActivity : AppCompatActivity() {
         addContactBtn.setOnClickListener {
             startActivity(Intent(this, ContactActivity::class.java))
         }
+    }
+
+    private fun openContactForm(contactId : Long) {
+        val contact = try {
+            contactsDbHelper.findContactById(contactId)
+        } catch (ex : EntryNotFoundException) {
+            Toast.makeText(
+                this,
+                getString(R.string.cant_open_contact_not_found),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+        val intent = Intent(this, ContactActivity::class.java).also {
+            it.putExtra("id", contact.id)
+            it.putExtra("phoneNumber", contact.phoneNumber)
+            it.putExtra("firstName", contact.firstName)
+            it.putExtra("lastName", contact.lastName)
+            it.putExtra("gender", contact.gender.name)
+            it.putExtra("comment", contact.comment)
+        }
+        startActivity(intent)
     }
 }

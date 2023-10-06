@@ -17,10 +17,11 @@
     <string name="add_contact_btn_description">Add contact</string>
 
     <!-- errors -->
-    <string name="contact_create_db_error">Error: Can\'t crate contact</string>
+    <string name="contact_create_db_error">Error: Can\'t create contact</string>
 
     <!-- user warnings -->
     <string name="field_required">Field required</string>
     <string name="cant_load_contacts_list">Can\'t load list of contacts</string>
     <string name="phone_number_already_exists">Contact with this phone number already exists</string>
+    <string name="cant_open_contact_not_found">Can\'t open. Contact not found</string>
 </resources>
