@@ -15,7 +15,7 @@ import com.ugreyiro.ft_hangouts.db.ContactsContract.ContactEntry.COLUMN_PHONE_NU
 import com.ugreyiro.ft_hangouts.db.ContactsContract.ContactEntry.TABLE_NAME
 import com.ugreyiro.ft_hangouts.db.ContactsContract.DATABASE_NAME
 import com.ugreyiro.ft_hangouts.db.ContactsContract.DATABASE_VERSION
-import com.ugreyiro.ft_hangouts.db.request.SelectQuery
+import com.ugreyiro.ft_hangouts.db.query.SelectQuery
 import com.ugreyiro.ft_hangouts.exception.EntryNotFoundException
 import com.ugreyiro.ft_hangouts.exception.PhoneNumberAlreadyExistsException
 import com.ugreyiro.ft_hangouts.model.Contact
@@ -93,6 +93,14 @@ class ContactsDatabaseHelper(context : Context)
         return writableDatabase.update(
             TABLE_NAME,
             contact.toContentValues(),
+            "${BaseColumns._ID} = ?",
+            arrayOf(contact.id.toString())
+        )
+    }
+
+    fun delete(contact: Contact) : Int {
+        return writableDatabase.delete(
+            TABLE_NAME,
             "${BaseColumns._ID} = ?",
             arrayOf(contact.id.toString())
         )

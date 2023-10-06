@@ -2,6 +2,7 @@ package com.ugreyiro.ft_hangouts
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
@@ -22,6 +23,13 @@ class ContactActivity : AppCompatActivity() {
     private lateinit var genderRadioGroup : RadioGroup
     private lateinit var commentEditText : EditText
     private lateinit var saveBtn : Button
+    private lateinit var deleteBtn : Button
+
+    /**
+     * True when activity opened for creating new contact.
+     * False if activity opened for existing contact
+     */
+    private var isNew = true
 
     private val contactsDbHelper = ContactsDatabaseHelper(this)
 
@@ -37,9 +45,10 @@ class ContactActivity : AppCompatActivity() {
         setContentView(R.layout.activity_contact)
 
         initFields()
-        initSaveButton()
-
         fillFields()
+
+        initSaveButton()
+        initDeleteButton()
     }
 
     private fun initFields() {
@@ -53,29 +62,22 @@ class ContactActivity : AppCompatActivity() {
 
     private fun initSaveButton() {
         saveBtn = findViewById(R.id.saveButton)
-        saveBtn.setOnClickListener{
-            try {
-                val contact = parseContact()
-                if (contact != null) {
-                    if (contact.id == null)
-                        createContact(contact)
-                    else
-                        updateContact(contact)
-                }
-                runMainActivity()
-            } catch (ex : PhoneNumberAlreadyExistsException) {
-                Toast.makeText(
-                    this,
-                    getString(R.string.phone_number_already_exists),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        saveBtn.setOnClickListener { saveButtonOnClick() }
+    }
+
+    private fun initDeleteButton() {
+        deleteBtn = findViewById(R.id.deleteButton)
+        if (isNew) {
+            deleteBtn.visibility = View.GONE
+            return
         }
+        deleteBtn.setOnClickListener { deleteButtonOnClick()  }
     }
 
     private fun fillFields() {
         if (intent.hasExtra("id")) {
             contactIdTextView.text = intent.getLongExtra("id", 0).toString()
+            isNew = false
         }
         fillTextEditByExtra(phoneNumberEditText, intent, "phoneNumber")
         fillTextEditByExtra(firstNameEditText, intent, "firstName")
@@ -108,6 +110,11 @@ class ContactActivity : AppCompatActivity() {
 
     private fun updateContact(contact: Contact) {
         contactsDbHelper.update(contact)
+    }
+
+    private fun deleteContact(contact : Contact) {
+        contactsDbHelper.delete(contact)
+        //TODO start main activity
     }
 
     private fun parseContact() : Contact? {
@@ -151,5 +158,35 @@ class ContactActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
             .also { it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
         startActivity(intent)
+    }
+
+    private fun saveButtonOnClick() {
+        try {
+            val contact = parseContact()
+            if (contact != null) {
+                if (isNew)
+                    createContact(contact)
+                else
+                    updateContact(contact)
+            }
+            runMainActivity()
+        } catch (ex : PhoneNumberAlreadyExistsException) {
+            Toast.makeText(
+                this,
+                getString(R.string.phone_number_already_exists),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun deleteButtonOnClick() {
+        val dialog = android.app.AlertDialog.Builder(this)
+            .setMessage(getString(R.string.delete_contact_dialog))
+            .setPositiveButton(getString(R.string.delete_contact_dialog_positive_btn)) { _, _ ->
+                deleteContact(parseContact()!!)
+            }
+            .setNegativeButton(getString(R.string.delete_contact_dialog_negative_btn)) { _, _ -> }
+            .create()
+        dialog.show()
     }
 }

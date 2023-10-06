@@ -1,4 +1,4 @@
-package com.ugreyiro.ft_hangouts.db.request
+package com.ugreyiro.ft_hangouts.db.query
 
 data class SelectQuery(
     val tableName : String,
