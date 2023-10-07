@@ -16,6 +16,10 @@ import com.ugreyiro.ft_hangouts.model.Contact
 import com.ugreyiro.ft_hangouts.model.Gender
 
 class ContactActivity : AppCompatActivity() {
+
+    private val MAX_PHONE_NUMBER_LENGTH = 20
+    private val MAX_NAME_LENGTH = 30
+
     private lateinit var contactIdTextView : TextView
     private lateinit var phoneNumberEditText : EditText
     private lateinit var firstNameEditText : EditText
@@ -112,8 +116,8 @@ class ContactActivity : AppCompatActivity() {
         contactsDbHelper.update(contact)
     }
 
-    private fun deleteContact(contact : Contact) {
-        contactsDbHelper.delete(contact)
+    private fun deleteContact(contactId : Long) {
+        contactsDbHelper.delete(contactId)
     }
 
     private fun parseContact() : Contact? {
@@ -139,8 +143,20 @@ class ContactActivity : AppCompatActivity() {
             phoneNumberEditText.error = getString(R.string.field_required)
             failed = true
         }
+        if (phoneNumberEditText.text.length > MAX_PHONE_NUMBER_LENGTH) {
+            phoneNumberEditText.error = "${getString(R.string.value_too_long)} $MAX_PHONE_NUMBER_LENGTH"
+            failed = true
+        }
         if (firstNameEditText.text.isNullOrBlank()) {
             firstNameEditText.error = getString(R.string.field_required)
+            failed = true
+        }
+        if (firstNameEditText.text.length > MAX_NAME_LENGTH) {
+            firstNameEditText.error = "${getString(R.string.value_too_long)} $MAX_NAME_LENGTH"
+            failed = true
+        }
+        if (lastNameEditText.text.length > MAX_NAME_LENGTH) {
+            lastNameEditText.error = "${getString(R.string.value_too_long)} $MAX_NAME_LENGTH"
             failed = true
         }
         return !failed
@@ -176,7 +192,7 @@ class ContactActivity : AppCompatActivity() {
         val dialog = android.app.AlertDialog.Builder(this)
             .setMessage(getString(R.string.delete_contact_dialog))
             .setPositiveButton(getString(R.string.delete_contact_dialog_positive_btn)) { _, _ ->
-                deleteContact(parseContact()!!)
+                deleteContact(contactIdTextView.text.toString().toLong())
                 finish()
             }
             .setNegativeButton(getString(R.string.delete_contact_dialog_negative_btn)) { _, _ -> }

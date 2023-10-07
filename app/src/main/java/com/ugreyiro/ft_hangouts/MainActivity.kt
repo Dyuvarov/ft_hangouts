@@ -1,10 +1,12 @@
 package com.ugreyiro.ft_hangouts
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.icu.text.DateFormat.getDateTimeInstance
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
@@ -15,7 +17,6 @@ import com.ugreyiro.ft_hangouts.adapter.ContactListAdapter
 import com.ugreyiro.ft_hangouts.db.ContactsDatabaseHelper
 import com.ugreyiro.ft_hangouts.exception.EntryNotFoundException
 import com.ugreyiro.ft_hangouts.observer.MainActivityBackgroundObserver
-import java.time.LocalDateTime
 import java.util.Date
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +38,25 @@ class MainActivity : AppCompatActivity() {
 
         initContactsListView()
         initAddContactButton()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_app_header, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId != R.id.headerColumnMenu) {
+            val newColor = when (item.itemId) {
+                R.id.color2 -> getColor(R.color.dark_blue)
+                R.id.color3 -> getColor(R.color.pink)
+                R.id.color4 -> getColor(R.color.purple)
+                else -> getColor(R.color.black)
+            }
+            supportActionBar?.setBackgroundDrawable(ColorDrawable(newColor))
+        }
+        return super.onOptionsItemSelected(item)
+        //TODO SAVE COLOR IN DB AND USE IT FOR ALL ACTIVITIES
     }
 
     override fun onStart() {

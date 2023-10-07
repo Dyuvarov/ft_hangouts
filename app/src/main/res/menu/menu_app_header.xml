@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<item
+    android:id="@+id/headerColumnMenu"
+    android:icon="@drawable/baseline_more_vert_24"
+    android:title=""
+    app:showAsAction="ifRoom">
+    <menu>
+        <item
+            android:id="@+id/color1"
+            android:title="@string/black_color"
+            android:icon="@drawable/ic_black_header"
+            app:showAsAction="always"/>
+        <item
+            android:id="@+id/color2"
+            android:title="@string/blue_color"
+            android:icon="@drawable/ic_dark_blue_header"/>
+        <item
+            android:id="@+id/color3"
+            android:title="@string/pink_color"
+            android:icon="@drawable/ic_pink_header"/>
+        <item
+            android:id="@+id/color4"
+            android:title="@string/purple_color"
+            android:icon="@drawable/ic_purple_header"/>
+    </menu>
+</item>
+</menu>

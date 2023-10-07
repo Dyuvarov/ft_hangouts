@@ -98,11 +98,11 @@ class ContactsDatabaseHelper(context : Context)
         )
     }
 
-    fun delete(contact: Contact) : Int {
+    fun delete(contactId: Long) : Int {
         return writableDatabase.delete(
             TABLE_NAME,
             "${BaseColumns._ID} = ?",
-            arrayOf(contact.id.toString())
+            arrayOf(contactId.toString())
         )
     }
 

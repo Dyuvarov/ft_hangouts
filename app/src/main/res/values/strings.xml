@@ -11,6 +11,10 @@
     <string name="female_gender">Female</string>
     <string name="other_gender">Other</string>
     <string name="unknown_gender">Unknown</string>
+    <string name="black_color">Black</string>
+    <string name="blue_color">Blue</string>
+    <string name="pink_color">Pink</string>
+    <string name="purple_color">Purple</string>
 
     <!-- Buttons -->
     <string name="save_btn_text">Save</string>
@@ -26,6 +30,7 @@
     <string name="phone_number_already_exists">Contact with this phone number already exists</string>
     <string name="cant_open_contact_not_found">Can\'t open. Contact not found</string>
     <string name="set_background_date_time">App was set in background at</string>
+    <string name="value_too_long">Max length = </string>
 
     <!-- dialogs -->
     <string name="delete_contact_dialog">Do you want to delete this contact?</string>
