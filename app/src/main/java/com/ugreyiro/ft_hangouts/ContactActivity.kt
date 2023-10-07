@@ -114,7 +114,6 @@ class ContactActivity : AppCompatActivity() {
 
     private fun deleteContact(contact : Contact) {
         contactsDbHelper.delete(contact)
-        //TODO start main activity
     }
 
     private fun parseContact() : Contact? {
@@ -154,12 +153,6 @@ class ContactActivity : AppCompatActivity() {
                 .toString().uppercase()
         )
 
-    private fun runMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-            .also { it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
-        startActivity(intent)
-    }
-
     private fun saveButtonOnClick() {
         try {
             val contact = parseContact()
@@ -168,8 +161,8 @@ class ContactActivity : AppCompatActivity() {
                     createContact(contact)
                 else
                     updateContact(contact)
+                finish()
             }
-            runMainActivity()
         } catch (ex : PhoneNumberAlreadyExistsException) {
             Toast.makeText(
                 this,
@@ -184,6 +177,7 @@ class ContactActivity : AppCompatActivity() {
             .setMessage(getString(R.string.delete_contact_dialog))
             .setPositiveButton(getString(R.string.delete_contact_dialog_positive_btn)) { _, _ ->
                 deleteContact(parseContact()!!)
+                finish()
             }
             .setNegativeButton(getString(R.string.delete_contact_dialog_negative_btn)) { _, _ -> }
             .create()

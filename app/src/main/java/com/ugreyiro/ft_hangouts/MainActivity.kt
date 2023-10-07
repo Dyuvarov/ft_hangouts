@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.ugreyiro.ft_hangouts.adapter.ContactListAdapter
 import com.ugreyiro.ft_hangouts.db.ContactsDatabaseHelper
@@ -18,6 +19,11 @@ class MainActivity : AppCompatActivity() {
 
     private val contactsDbHelper = ContactsDatabaseHelper(this)
 
+    private val contactActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            fillContactsList()
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,6 +33,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initContactsListView() {
+        contactsListView = findViewById(R.id.contactsList)
+        contactsListView.setOnItemClickListener { _, view, _, _ ->
+            val contactId = view
+                .findViewById<TextView>(R.id.contactIdTextView).text
+                .toString()
+                .toLong()
+            openContactForm(contactId)
+        }
+        fillContactsList()
+    }
+
+    private fun fillContactsList() {
         val contacts = try {
             contactsDbHelper.findAllAsListDto()
         } catch (ex : Exception) {
@@ -38,22 +56,14 @@ class MainActivity : AppCompatActivity() {
             ).show()
             return
         }
-        contactsListView = findViewById(R.id.contactsList)
-        contactsListView.adapter = ContactListAdapter(this, contacts)
 
-        contactsListView.setOnItemClickListener { parent, view, position, id ->
-            val contactId = view
-                .findViewById<TextView>(R.id.contactIdTextView).text
-                .toString()
-                .toLong()
-            openContactForm(contactId)
-        }
+        contactsListView.adapter = ContactListAdapter(this, contacts)
     }
 
     private fun initAddContactButton() {
         addContactBtn = findViewById(R.id.addContactBtn)
         addContactBtn.setOnClickListener {
-            startActivity(Intent(this, ContactActivity::class.java))
+            contactActivityLauncher.launch(Intent(this, ContactActivity::class.java))
         }
     }
 
@@ -76,6 +86,6 @@ class MainActivity : AppCompatActivity() {
             it.putExtra("gender", contact.gender.name)
             it.putExtra("comment", contact.comment)
         }
-        startActivity(intent)
+        contactActivityLauncher.launch(intent)
     }
 }
