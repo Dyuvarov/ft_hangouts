@@ -25,6 +25,7 @@
     <string name="cant_load_contacts_list">Can\'t load list of contacts</string>
     <string name="phone_number_already_exists">Contact with this phone number already exists</string>
     <string name="cant_open_contact_not_found">Can\'t open. Contact not found</string>
+    <string name="set_background_date_time">App was set in background at</string>
 
     <!-- dialogs -->
     <string name="delete_contact_dialog">Do you want to delete this contact?</string>

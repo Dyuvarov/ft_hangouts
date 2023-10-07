@@ -1,6 +1,8 @@
 package com.ugreyiro.ft_hangouts
 
 import android.content.Intent
+import android.icu.text.DateFormat.getDateTimeInstance
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
@@ -12,17 +14,22 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ugreyiro.ft_hangouts.adapter.ContactListAdapter
 import com.ugreyiro.ft_hangouts.db.ContactsDatabaseHelper
 import com.ugreyiro.ft_hangouts.exception.EntryNotFoundException
+import com.ugreyiro.ft_hangouts.observer.MainActivityBackgroundObserver
+import java.time.LocalDateTime
+import java.util.Date
 
 class MainActivity : AppCompatActivity() {
     private lateinit var contactsListView : ListView
     private lateinit var addContactBtn : ImageButton
 
     private val contactsDbHelper = ContactsDatabaseHelper(this)
-
     private val contactActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             fillContactsList()
         }
+
+    /** Stores timestamp when app was set in background */
+    private var setInBackgroundAt : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +37,21 @@ class MainActivity : AppCompatActivity() {
 
         initContactsListView()
         initAddContactButton()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (MainActivityBackgroundObserver.returnedToFront() && setInBackgroundAt != null) {
+            showSetBackgroundToast()
+            setInBackgroundAt = null
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (MainActivityBackgroundObserver.setInBackground() && !isChangingConfigurations) {
+            setInBackgroundAt = getDateTimeInstance().format(Date())
+        }
     }
 
     private fun initContactsListView() {
@@ -87,5 +109,13 @@ class MainActivity : AppCompatActivity() {
             it.putExtra("comment", contact.comment)
         }
         contactActivityLauncher.launch(intent)
+    }
+
+    private fun showSetBackgroundToast() {
+        Toast.makeText(
+            this,
+            "${getString(R.string.set_background_date_time)} $setInBackgroundAt",
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
