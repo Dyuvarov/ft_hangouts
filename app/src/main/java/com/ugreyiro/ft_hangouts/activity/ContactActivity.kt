@@ -1,4 +1,4 @@
-package com.ugreyiro.ft_hangouts
+package com.ugreyiro.ft_hangouts.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,12 +10,15 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.ugreyiro.ft_hangouts.db.ContactsDatabaseHelper
+import com.ugreyiro.ft_hangouts.R
+import com.ugreyiro.ft_hangouts.db.FtHangoutsDatabaseHelper
+import com.ugreyiro.ft_hangouts.db.repository.ContactsRepository
+import com.ugreyiro.ft_hangouts.db.repository.SettingsRepository
 import com.ugreyiro.ft_hangouts.exception.PhoneNumberAlreadyExistsException
 import com.ugreyiro.ft_hangouts.model.Contact
 import com.ugreyiro.ft_hangouts.model.Gender
 
-class ContactActivity : AppCompatActivity() {
+class ContactActivity : BaseActivity() {
 
     private val MAX_PHONE_NUMBER_LENGTH = 20
     private val MAX_NAME_LENGTH = 30
@@ -35,7 +38,9 @@ class ContactActivity : AppCompatActivity() {
      */
     private var isNew = true
 
-    private val contactsDbHelper = ContactsDatabaseHelper(this)
+    private val dbHelper = FtHangoutsDatabaseHelper(this)
+    private val contactsRepository = ContactsRepository(dbHelper)
+    override val settingsRepository = SettingsRepository(dbHelper)
 
     private val genderRadioIdMap = mapOf(
         Gender.MALE to R.id.maleGenderRadioBtn,
@@ -102,7 +107,7 @@ class ContactActivity : AppCompatActivity() {
 
     /** Validate and save contact in DB */
     private fun createContact(contact: Contact) {
-        val createdId = contactsDbHelper.create(contact)
+        val createdId = contactsRepository.create(contact)
         if (createdId < 0) {
             Toast.makeText(
                 this,
@@ -113,11 +118,11 @@ class ContactActivity : AppCompatActivity() {
     }
 
     private fun updateContact(contact: Contact) {
-        contactsDbHelper.update(contact)
+        contactsRepository.update(contact)
     }
 
     private fun deleteContact(contactId : Long) {
-        contactsDbHelper.delete(contactId)
+        contactsRepository.delete(contactId)
     }
 
     private fun parseContact() : Contact? {
