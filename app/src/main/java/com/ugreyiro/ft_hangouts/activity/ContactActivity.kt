@@ -1,15 +1,18 @@
 package com.ugreyiro.ft_hangouts.activity
 
 import android.content.Intent
+import android.opengl.Visibility
+import android.os.Build
 import android.os.Bundle
+import android.telephony.SmsManager
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.ugreyiro.ft_hangouts.R
 import com.ugreyiro.ft_hangouts.db.FtHangoutsDatabaseHelper
 import com.ugreyiro.ft_hangouts.db.repository.ContactsRepository
@@ -17,6 +20,8 @@ import com.ugreyiro.ft_hangouts.db.repository.SettingsRepository
 import com.ugreyiro.ft_hangouts.exception.PhoneNumberAlreadyExistsException
 import com.ugreyiro.ft_hangouts.model.Contact
 import com.ugreyiro.ft_hangouts.model.Gender
+import java.lang.Exception
+
 
 class ContactActivity : BaseActivity() {
 
@@ -31,6 +36,9 @@ class ContactActivity : BaseActivity() {
     private lateinit var commentEditText : EditText
     private lateinit var saveBtn : Button
     private lateinit var deleteBtn : Button
+    private lateinit var messageBtn : ImageButton
+
+    private lateinit var smsManager : SmsManager
 
     /**
      * True when activity opened for creating new contact.
@@ -58,6 +66,7 @@ class ContactActivity : BaseActivity() {
 
         initSaveButton()
         initDeleteButton()
+        initMessaging()
     }
 
     private fun initFields() {
@@ -81,6 +90,20 @@ class ContactActivity : BaseActivity() {
             return
         }
         deleteBtn.setOnClickListener { deleteButtonOnClick()  }
+    }
+
+    private fun initMessaging() {
+        smsManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            applicationContext.getSystemService(SmsManager::class.java)
+        } else {
+            SmsManager.getDefault()
+        }
+        messageBtn = findViewById(R.id.msgButton)
+        if (isNew) {
+            messageBtn.visibility = View.GONE
+        } else {
+            messageBtn.setOnClickListener { messageButtonOnClick() }
+        }
     }
 
     private fun fillFields() {
@@ -203,5 +226,17 @@ class ContactActivity : BaseActivity() {
             .setNegativeButton(getString(R.string.delete_contact_dialog_negative_btn)) { _, _ -> }
             .create()
         dialog.show()
+    }
+
+    private fun messageButtonOnClick() {
+        try {
+            smsManager.sendTextMessage("+15555215556", null, "Hello from the other side!", null, null)
+        } catch (e : Exception) {
+            Toast.makeText(
+                this,
+                "${getString(R.string.sms_error)} " + e.message,
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 }
