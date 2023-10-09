@@ -11,5 +11,5 @@
     <color name="pink">#DFA0F6</color>
     <color name="purple">#360B4B</color>
     <color name="sent_msg_bg">#00062B</color>
-    <color name="received_msg_bg">#9F00062B</color>
+    <color name="received_msg_bg">#7400062B</color>
 </resources>

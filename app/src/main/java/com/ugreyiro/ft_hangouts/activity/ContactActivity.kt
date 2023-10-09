@@ -1,18 +1,18 @@
 package com.ugreyiro.ft_hangouts.activity
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.telephony.SmsManager
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import android.Manifest
 import com.ugreyiro.ft_hangouts.R
 import com.ugreyiro.ft_hangouts.db.FtHangoutsDatabaseHelper
 import com.ugreyiro.ft_hangouts.db.repository.ContactsRepository
@@ -20,8 +20,13 @@ import com.ugreyiro.ft_hangouts.db.repository.SettingsRepository
 import com.ugreyiro.ft_hangouts.exception.PhoneNumberAlreadyExistsException
 import com.ugreyiro.ft_hangouts.model.Contact
 import com.ugreyiro.ft_hangouts.model.Gender
-import java.lang.Exception
 
+const val CONTACT_ID_EXTRA = "id"
+const val PHONE_NUMBER_EXTRA = "phoneNumber"
+const val FIRST_NAME_EXTRA = "firstName"
+const val LAST_NAME_EXTRA = "lastName"
+const val COMMENT_EXTRA = "comment"
+const val GENDER_EXTRA = "gender"
 
 class ContactActivity : BaseActivity() {
 
@@ -36,7 +41,7 @@ class ContactActivity : BaseActivity() {
     private lateinit var commentEditText : EditText
     private lateinit var saveBtn : Button
     private lateinit var deleteBtn : Button
-    private lateinit var messageBtn : ImageButton
+    private lateinit var messageBtn : Button
 
     private lateinit var smsManager : SmsManager
 
@@ -107,16 +112,16 @@ class ContactActivity : BaseActivity() {
     }
 
     private fun fillFields() {
-        if (intent.hasExtra("id")) {
-            contactIdTextView.text = intent.getLongExtra("id", 0).toString()
+        if (intent.hasExtra(CONTACT_ID_EXTRA)) {
+            contactIdTextView.text = intent.getLongExtra(CONTACT_ID_EXTRA, 0).toString()
             isNew = false
         }
-        fillTextEditByExtra(phoneNumberEditText, intent, "phoneNumber")
-        fillTextEditByExtra(firstNameEditText, intent, "firstName")
-        fillTextEditByExtra(lastNameEditText, intent, "lastName")
-        fillTextEditByExtra(commentEditText, intent, "comment")
-        if (intent.hasExtra("gender")) {
-            val gender = Gender.valueOf(intent.getStringExtra("gender")!!)
+        fillTextEditByExtra(phoneNumberEditText, intent, PHONE_NUMBER_EXTRA)
+        fillTextEditByExtra(firstNameEditText, intent, FIRST_NAME_EXTRA)
+        fillTextEditByExtra(lastNameEditText, intent, LAST_NAME_EXTRA)
+        fillTextEditByExtra(commentEditText, intent, COMMENT_EXTRA)
+        if (intent.hasExtra(GENDER_EXTRA)) {
+            val gender = Gender.valueOf(intent.getStringExtra(GENDER_EXTRA)!!)
             val radioBtn = findViewById<RadioButton>(genderRadioIdMap[gender]!!)
             radioBtn.isChecked = true
         }
@@ -216,6 +221,20 @@ class ContactActivity : BaseActivity() {
         }
     }
 
+    private fun unsavedChanges() : Boolean {
+        val phoneNumber = phoneNumberEditText.text.toString()
+        val firstName = firstNameEditText.text.toString()
+        val lastName = lastNameEditText.text?.toString()
+        val gender = getCheckedGender()
+        val comment = commentEditText.text.toString()
+
+        return phoneNumber != intent.getStringExtra(PHONE_NUMBER_EXTRA)
+                || firstName != intent.getStringExtra(FIRST_NAME_EXTRA)
+                || lastName != intent.getStringExtra(LAST_NAME_EXTRA)
+                || gender.name != intent.getStringExtra(GENDER_EXTRA)
+                || comment != intent.getStringExtra(COMMENT_EXTRA)
+    }
+
     private fun deleteButtonOnClick() {
         val dialog = android.app.AlertDialog.Builder(this)
             .setMessage(getString(R.string.delete_contact_dialog))
@@ -229,14 +248,21 @@ class ContactActivity : BaseActivity() {
     }
 
     private fun messageButtonOnClick() {
-        try {
-            smsManager.sendTextMessage("+15555215556", null, "Hello from the other side!", null, null)
-        } catch (e : Exception) {
+        if (unsavedChanges()) {
             Toast.makeText(
                 this,
-                "${getString(R.string.sms_error)} " + e.message,
+                getString(R.string.unsaved_changes),
                 Toast.LENGTH_LONG
             ).show()
+        } else {
+            getPermission(Manifest.permission.READ_SMS, this)
+            getPermission(Manifest.permission.SEND_SMS, this)
+            getPermission(Manifest.permission.RECEIVE_SMS, this)
+            val intent = Intent(this, ChatActivity::class.java).also {
+                it.putExtra(PHONE_NUMBER_EXTRA, intent.getStringExtra(PHONE_NUMBER_EXTRA))
+                it.putExtra(FIRST_NAME_EXTRA, intent.getStringExtra(FIRST_NAME_EXTRA))
+            }
+            startActivity(intent)
         }
     }
 }

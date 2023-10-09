@@ -167,11 +167,11 @@
         app:layout_constraintStart_toStartOf="@+id/saveButton"
         app:layout_constraintTop_toBottomOf="@+id/saveButton" />
 
-    <ImageButton
+    <Button
         android:id="@+id/msgButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_message"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/ic_message"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

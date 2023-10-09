@@ -8,7 +8,7 @@
     android:layout_marginTop="16dp">
 
     <TextView
-        android:id="@+id/sent_msg_timestamp"
+        android:id="@+id/msg_timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/msg_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -34,7 +34,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sent_msg_timestamp" />
+        app:layout_constraintTop_toBottomOf="@+id/msg_timestamp" />
 
     <!-- FOR DEBUGGING ONLY   -->
     <TextView
@@ -53,5 +53,5 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/msg_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>
