@@ -5,12 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginEnd="8dp"
-    android:layout_marginTop="16dp">
+    android:layout_marginTop="16dp"
+    android:paddingEnd="4dp"
+    android:paddingStart="4dp">
 
     <TextView
         android:id="@+id/msg_timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="8dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
@@ -24,15 +27,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="260dp"
+        android:paddingRight="12dp"
         android:paddingLeft="12dp"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        android:paddingRight="12dp"
         android:text="Where's the money, Lebowski?"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sent_msg_timestamp"
+        app:layout_constraintTop_toBottomOf="@+id/msg_timestamp"
         android:background="@drawable/sent_message_bg"/>
 
 <!-- FOR DEBUGGING ONLY   -->
@@ -52,7 +55,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sent_msg_text" />
+        app:layout_constraintTop_toBottomOf="@+id/msg_text" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

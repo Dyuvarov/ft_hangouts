@@ -53,8 +53,6 @@ class ContactActivity : BaseActivity() {
     private lateinit var deleteBtn : Button
     private lateinit var messageBtn : Button
 
-    private lateinit var smsManager : SmsManager
-
     /**
      * True when activity opened for creating new contact.
      * False if activity opened for existing contact
@@ -108,11 +106,6 @@ class ContactActivity : BaseActivity() {
     }
 
     private fun initMessaging() {
-        smsManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            applicationContext.getSystemService(SmsManager::class.java)
-        } else {
-            SmsManager.getDefault()
-        }
         messageBtn = findViewById(R.id.msgButton)
         if (isNew) {
             messageBtn.visibility = View.GONE
