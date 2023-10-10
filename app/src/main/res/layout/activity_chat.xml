@@ -49,5 +49,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chat_contact_name"
+        android:divider="@null"
+        android:dividerHeight="0dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

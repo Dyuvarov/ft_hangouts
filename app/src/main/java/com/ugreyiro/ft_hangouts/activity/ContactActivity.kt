@@ -13,6 +13,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import android.Manifest
+import android.content.pm.PackageManager
+import androidx.activity.result.ActivityResultLauncher
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.ugreyiro.ft_hangouts.R
 import com.ugreyiro.ft_hangouts.db.FtHangoutsDatabaseHelper
 import com.ugreyiro.ft_hangouts.db.repository.ContactsRepository
@@ -30,8 +34,14 @@ const val GENDER_EXTRA = "gender"
 
 class ContactActivity : BaseActivity() {
 
-    private val MAX_PHONE_NUMBER_LENGTH = 20
-    private val MAX_NAME_LENGTH = 30
+    companion object {
+        private const val MAX_PHONE_NUMBER_LENGTH = 20
+        private const val MAX_NAME_LENGTH = 30
+        const val SMS_READ_REQ = 1
+        const val SMS_RECEIVE_REQ = 2
+        const val SMS_SEND_REQ = 3
+    }
+
 
     private lateinit var contactIdTextView : TextView
     private lateinit var phoneNumberEditText : EditText
@@ -255,14 +265,44 @@ class ContactActivity : BaseActivity() {
                 Toast.LENGTH_LONG
             ).show()
         } else {
-            getPermission(Manifest.permission.READ_SMS, this)
-            getPermission(Manifest.permission.SEND_SMS, this)
-            getPermission(Manifest.permission.RECEIVE_SMS, this)
-            val intent = Intent(this, ChatActivity::class.java).also {
-                it.putExtra(PHONE_NUMBER_EXTRA, intent.getStringExtra(PHONE_NUMBER_EXTRA))
-                it.putExtra(FIRST_NAME_EXTRA, intent.getStringExtra(FIRST_NAME_EXTRA))
+            val smsAllowed = getSmsPermissions()
+            if (smsAllowed) {
+                startChatActivity()
             }
-            startActivity(intent)
+        }
+    }
+
+    private fun startChatActivity() {
+        val intent = Intent(this, ChatActivity::class.java).also {
+            it.putExtra(PHONE_NUMBER_EXTRA, intent.getStringExtra(PHONE_NUMBER_EXTRA))
+            it.putExtra(FIRST_NAME_EXTRA, intent.getStringExtra(FIRST_NAME_EXTRA))
+        }
+        startActivity(intent)
+    }
+
+    private fun getSmsPermissions() : Boolean{
+        val notGranted = listOf(
+            Manifest.permission.READ_SMS,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.RECEIVE_SMS
+        ).filterNot { hasPermission(it, this) }
+        if (notGranted.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, notGranted.toTypedArray(), 0)
+        }
+        return notGranted.isEmpty()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val smsAllowed = grantResults
+            .filter { it == PackageManager.PERMISSION_GRANTED }
+            .size == 3
+        if (smsAllowed) {
+            startChatActivity()
         }
     }
 }

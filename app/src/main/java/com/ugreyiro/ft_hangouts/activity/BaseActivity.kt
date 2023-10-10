@@ -27,10 +27,6 @@ abstract class BaseActivity : AppCompatActivity(), ConfigurableHeaderActivity {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(color))
     }
 
-    fun getPermission(permission: String, activity : Activity) {
-        val permissionStatus = ContextCompat.checkSelfPermission(activity, permission)
-        if (permissionStatus != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, arrayOf(permission), 1)
-        }
-    }
+    fun hasPermission(permission: String, activity : Activity) =
+        ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED
 }
