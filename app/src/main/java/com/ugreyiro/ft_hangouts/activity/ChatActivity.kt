@@ -1,10 +1,6 @@
 package com.ugreyiro.ft_hangouts.activity
 
-import android.content.BroadcastReceiver
 import android.content.ContentResolver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.provider.Telephony
@@ -19,14 +15,9 @@ import com.ugreyiro.ft_hangouts.R
 import com.ugreyiro.ft_hangouts.adapter.MessageListAdapter
 import com.ugreyiro.ft_hangouts.model.Message
 import com.ugreyiro.ft_hangouts.model.MessageType
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.concurrent.TimeUnit
+import com.ugreyiro.ft_hangouts.observer.SmsPublisher
 
 class ChatActivity : AppCompatActivity() {
-
-    private val datePattern = "dd/MM/yy HH:MM"
-
     private lateinit var messagesListView : ListView
     private lateinit var inputMessageEditText : EditText
     private lateinit var contactNameTextView: TextView
@@ -38,16 +29,6 @@ class ChatActivity : AppCompatActivity() {
 
     private lateinit var contactPhoneNumber : String
     private lateinit var contactName : String
-
-    private val smsReceiver = object : BroadcastReceiver() {
-
-        override fun onReceive(context: Context?, intent: Intent) {
-            if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION == intent.action) {
-                messages.clear()
-                fillMessagesList()
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,12 +50,12 @@ class ChatActivity : AppCompatActivity() {
 
         fillMessagesList()
 
-        registerReceiver(smsReceiver, IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION))
+        SmsPublisher.subscribe(contactPhoneNumber, ::onNewMessages)
     }
 
     override fun onDestroy() {
+        SmsPublisher.unSubscribe(contactPhoneNumber)
         super.onDestroy()
-        unregisterReceiver(smsReceiver)
     }
 
     private fun fillMessagesList() {
@@ -98,9 +79,7 @@ class ChatActivity : AppCompatActivity() {
                 val text = it.getString(it.getColumnIndexOrThrow(Telephony.Sms.BODY))
                 val typeRaw = it.getInt(it.getColumnIndexOrThrow(Telephony.Sms.TYPE))
                 val type = if (typeRaw == MESSAGE_TYPE_INBOX) MessageType.RECEIVED else MessageType.SENT
-                val date = SimpleDateFormat(datePattern)
-                    .format(TimeUnit.MILLISECONDS.toMillis(dateRaw))
-                messages.add(Message(date, text, type))
+                messages.add(Message(dateRaw, text, type, contactPhoneNumber))
             }
         }
     }
@@ -116,9 +95,10 @@ class ChatActivity : AppCompatActivity() {
             smsManager.sendTextMessage(contactPhoneNumber, null, messageText, null, null)
             inputMessageEditText.setText("")
             messages.add(Message(
-                date = SimpleDateFormat().format(Date()),
+                date = System.currentTimeMillis(),
                 body = messageText,
-                type = MessageType.SENT)
+                type = MessageType.SENT,
+                address = "")
             )
             fillMessagesList()
         }
@@ -129,5 +109,10 @@ class ChatActivity : AppCompatActivity() {
         applicationContext.getSystemService(SmsManager::class.java)
     } else {
         SmsManager.getDefault()
+    }
+
+    private fun onNewMessages(receivedMessages : List<Message>) {
+        messages += receivedMessages
+        messagesListView.adapter = MessageListAdapter(this, messages)
     }
 }

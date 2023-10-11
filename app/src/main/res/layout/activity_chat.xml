@@ -16,7 +16,7 @@
         android:stackFromBottom="true"
         android:divider="@null"
         android:dividerHeight="0dp"
-        android:paddingBottom="40dp"
+        android:paddingBottom="46dp"
         android:paddingTop="34dp"/>
 
     <TextView
@@ -37,7 +37,7 @@
     <RelativeLayout
         android:id="@+id/relative_layout"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -42,7 +42,7 @@ private const val SQL_DROP_SETTINGS_TABLE =
 
 const val HEADER_COLOR_SETTING_NAME = "header_color"
 
-class FtHangoutsDatabaseHelper(context : Context)
+class FtHangoutsDatabaseHelper(context : Context?)
     : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase?) {

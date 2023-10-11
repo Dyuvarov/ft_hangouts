@@ -57,7 +57,7 @@ class ContactActivity : BaseActivity() {
     private var isNew = true
 
     private val dbHelper = FtHangoutsDatabaseHelper(this)
-    private val contactsRepository = ContactsRepository(dbHelper)
+    override val contactsRepository = ContactsRepository(dbHelper)
     override val settingsRepository = SettingsRepository(dbHelper)
 
     private val genderRadioIdMap = mapOf(

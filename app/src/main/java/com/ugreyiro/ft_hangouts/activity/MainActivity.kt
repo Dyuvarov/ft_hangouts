@@ -18,6 +18,7 @@ import com.ugreyiro.ft_hangouts.db.HEADER_COLOR_SETTING_NAME
 import com.ugreyiro.ft_hangouts.db.repository.ContactsRepository
 import com.ugreyiro.ft_hangouts.db.repository.SettingsRepository
 import com.ugreyiro.ft_hangouts.exception.EntryNotFoundException
+import com.ugreyiro.ft_hangouts.model.Message
 import com.ugreyiro.ft_hangouts.observer.MainActivityBackgroundObserver
 import java.util.Date
 
@@ -26,7 +27,7 @@ class MainActivity : BaseActivity() {
     private lateinit var addContactBtn : ImageButton
 
     private val dbHelper = FtHangoutsDatabaseHelper(this)
-    private val contactsRepository = ContactsRepository(dbHelper)
+    override val contactsRepository = ContactsRepository(dbHelper)
     override val settingsRepository = SettingsRepository(dbHelper)
     private val contactActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -62,6 +63,11 @@ class MainActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onSmsReceived(messages: List<Message>) {
+        super.onSmsReceived(messages)
+        fillContactsList()
+    }
+
     override fun onStart() {
         super.onStart()
         if (MainActivityBackgroundObserver.returnedToFront() && setInBackgroundAt != null) {
@@ -76,6 +82,8 @@ class MainActivity : BaseActivity() {
             setInBackgroundAt = getDateTimeInstance().format(Date())
         }
     }
+
+
 
     private fun initContactsListView() {
         contactsListView = findViewById(R.id.contactsList)
@@ -127,9 +135,9 @@ class MainActivity : BaseActivity() {
             it.putExtra("id", contact.id)
             it.putExtra("phoneNumber", contact.phoneNumber)
             it.putExtra("firstName", contact.firstName)
-            it.putExtra("lastName", contact.lastName)
+            it.putExtra("lastName", contact.lastName ?: "")
             it.putExtra("gender", contact.gender.name)
-            it.putExtra("comment", contact.comment)
+            it.putExtra("comment", contact.comment ?: "")
         }
         contactActivityLauncher.launch(intent)
     }
