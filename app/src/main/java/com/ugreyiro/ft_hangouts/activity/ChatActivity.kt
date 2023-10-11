@@ -13,11 +13,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.ugreyiro.ft_hangouts.R
 import com.ugreyiro.ft_hangouts.adapter.MessageListAdapter
+import com.ugreyiro.ft_hangouts.db.FtHangoutsDatabaseHelper
+import com.ugreyiro.ft_hangouts.db.repository.SettingsRepository
 import com.ugreyiro.ft_hangouts.model.Message
 import com.ugreyiro.ft_hangouts.model.MessageType
 import com.ugreyiro.ft_hangouts.observer.SmsPublisher
 
-class ChatActivity : AppCompatActivity() {
+class ChatActivity : BaseActivity() {
     private lateinit var messagesListView : ListView
     private lateinit var inputMessageEditText : EditText
     private lateinit var contactNameTextView: TextView
@@ -29,6 +31,8 @@ class ChatActivity : AppCompatActivity() {
 
     private lateinit var contactPhoneNumber : String
     private lateinit var contactName : String
+
+    override val settingsRepository = SettingsRepository(FtHangoutsDatabaseHelper(this))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
