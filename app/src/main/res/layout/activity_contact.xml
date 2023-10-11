@@ -1,170 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ContactActivity">
 
-    <TextView
-        android:id="@+id/contactIdTextView"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/contactIdTextView"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/msgButton"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:background="@drawable/ic_message"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/msgButton"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/ic_message"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/phoneNumberTetView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/phone_number_title"
-        app:layout_constraintStart_toStartOf="@+id/phoneNumberEditText"
-        app:layout_constraintTop_toBottomOf="@+id/msgButton" />
-    <EditText
-        android:id="@+id/phoneNumberEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:hint="+1234567890"
-        android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneNumberTetView" />
-
-    <TextView
-        android:id="@+id/firstNameTetView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/first_name_title"
-        app:layout_constraintStart_toStartOf="@+id/firstNameEditText"
-        app:layout_constraintTop_toBottomOf="@+id/phoneNumberEditText" />
-    <EditText
-        android:id="@+id/firstNameEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstNameTetView" />
-
-    <TextView
-        android:id="@+id/lastNameTetView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/last_name_title"
-        app:layout_constraintStart_toStartOf="@+id/lastNameEditText"
-        app:layout_constraintTop_toBottomOf="@+id/firstNameEditText" />
-    <EditText
-        android:id="@+id/lastNameEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lastNameTetView" />
-
-    <TextView
-        android:id="@+id/genderTetView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/gender_title"
-        app:layout_constraintStart_toStartOf="@+id/genderRadioGroup"
-        app:layout_constraintTop_toBottomOf="@+id/lastNameEditText" />
-
-    <RadioGroup
-        android:id="@+id/genderRadioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genderTetView">
-
-        <RadioButton
-            android:id="@+id/maleGenderRadioBtn"
+        <TextView
+            android:id="@+id/phoneNumberTetView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tag=""
-            android:text="@string/male_gender" />
-
-        <RadioButton
-            android:id="@+id/femaleGenderRadioBtn"
+            android:layout_marginTop="24dp"
+            android:text="@string/phone_number_title"
+            app:layout_constraintStart_toStartOf="@+id/phoneNumberEditText"
+            app:layout_constraintTop_toBottomOf="@+id/msgButton" />
+        <EditText
+            android:id="@+id/phoneNumberEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/female_gender" />
+            android:layout_marginTop="4dp"
+            android:ems="10"
+            android:hint="+1234567890"
+            android:inputType="phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumberTetView" />
 
-        <RadioButton
-            android:id="@+id/otherGenderRadioBtn"
+        <TextView
+            android:id="@+id/firstNameTetView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/other_gender" />
-
-        <RadioButton
-            android:id="@+id/unknownGenderRadioBtn"
+            android:layout_marginTop="8dp"
+            android:text="@string/first_name_title"
+            app:layout_constraintStart_toStartOf="@+id/firstNameEditText"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumberEditText" />
+        <EditText
+            android:id="@+id/firstNameEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/unknown_gender" />
-    </RadioGroup>
+            android:layout_marginTop="4dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstNameTetView" />
 
-    <TextView
-        android:id="@+id/commentTetView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/comment_title"
-        app:layout_constraintStart_toStartOf="@+id/commentEditText"
-        app:layout_constraintTop_toBottomOf="@+id/genderRadioGroup" />
+        <TextView
+            android:id="@+id/lastNameTetView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/last_name_title"
+            app:layout_constraintStart_toStartOf="@+id/lastNameEditText"
+            app:layout_constraintTop_toBottomOf="@+id/firstNameEditText" />
+        <EditText
+            android:id="@+id/lastNameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lastNameTetView" />
 
-    <EditText
-        android:id="@+id/commentEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commentTetView" />
+        <TextView
+            android:id="@+id/genderTetView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/gender_title"
+            app:layout_constraintStart_toStartOf="@+id/genderRadioGroup"
+            app:layout_constraintTop_toBottomOf="@+id/lastNameEditText" />
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        <RadioGroup
+            android:id="@+id/genderRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/genderTetView">
 
-        android:text="@string/save_btn_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commentEditText" />
+            <RadioButton
+                android:id="@+id/maleGenderRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag=""
+                android:text="@string/male_gender" />
 
-    <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/delete_btn_text"
-        app:layout_constraintEnd_toEndOf="@+id/saveButton"
-        app:layout_constraintStart_toStartOf="@+id/saveButton"
-        app:layout_constraintTop_toBottomOf="@+id/saveButton" />
+            <RadioButton
+                android:id="@+id/femaleGenderRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/female_gender" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <RadioButton
+                android:id="@+id/otherGenderRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/other_gender" />
+
+            <RadioButton
+                android:id="@+id/unknownGenderRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/unknown_gender" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/commentTetView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/comment_title"
+            app:layout_constraintStart_toStartOf="@+id/commentEditText"
+            app:layout_constraintTop_toBottomOf="@+id/genderRadioGroup" />
+
+        <EditText
+            android:id="@+id/commentEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commentTetView" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+
+            android:text="@string/save_btn_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commentEditText" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/delete_btn_text"
+            app:layout_constraintEnd_toEndOf="@+id/saveButton"
+            app:layout_constraintStart_toStartOf="@+id/saveButton"
+            app:layout_constraintTop_toBottomOf="@+id/saveButton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

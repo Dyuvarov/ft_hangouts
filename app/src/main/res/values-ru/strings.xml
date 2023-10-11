@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ft_hangouts</string>
+    <string name="phone_number_title">Номер телефона*</string>
+    <string name="first_name_title">Имя*</string>
+    <string name="last_name_title">Фамилия</string>
+    <string name="gender_title">Пол</string>
+    <string name="comment_title">Комментарий</string>
+    <string name="male_gender">Мужской</string>
+    <string name="female_gender">Женский</string>
+    <string name="other_gender">Другой</string>
+    <string name="unknown_gender">Не выбран</string>
+    <string name="black_color">Черный</string>
+    <string name="blue_color">Синий</string>
+    <string name="pink_color">Розовый</string>
+    <string name="purple_color">Фиолетовый</string>
+    <string name="save_btn_text">Сохранить</string>
+    <string name="delete_btn_text">Удалить</string>
+    <string name="add_contact_btn_description">Добавить контакт</string>
+    <string name="contact_create_db_error">Ошибка создания контакта</string>
+    <string name="field_required">Обязательное поле</string>
+    <string name="cant_load_contacts_list">Не удалось загрузить список контактов</string>
+    <string name="phone_number_already_exists">Контакт с таким номером уже существует</string>
+    <string name="cant_open_contact_not_found">Не возможно открыть. Контакт не найден</string>
+    <string name="set_background_date_time">"Приложение было свернуто "</string>
+    <string name="value_too_long">"Максимальная длина = "</string>
+    <string name="sms_error">Ошибка отправки смс:</string>
+    <string name="unsaved_changes">Не сохранённые изменения</string>
+    <string name="delete_contact_dialog">Вы хотите удалить этот контакт?</string>
+    <string name="delete_contact_dialog_positive_btn">Да</string>
+    <string name="delete_contact_dialog_negative_btn">Нет</string>
+    <string name="msg_hint">Введите сообщение здесь</string>
+</resources>

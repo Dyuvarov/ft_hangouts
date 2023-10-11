@@ -6,34 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".activity.ChatActivity">
 
+    <ListView
+        android:id="@+id/messages_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/relative_layout"
+        app:layout_constraintTop_toBottomOf="@+id/chat_contact_name"
+        android:transcriptMode="alwaysScroll"
+        android:stackFromBottom="true"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:paddingBottom="40dp"
+        android:paddingTop="34dp"/>
+
     <TextView
         android:id="@+id/chat_contact_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
+        android:paddingTop="5dp"
         android:text="Lebowski"
         android:textAlignment="center"
-        android:paddingTop="5dp"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/relative_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="38dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:translationZ="90dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
         <EditText
             android:id="@+id/input_msg_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/send_msg_btn"
-            android:hint="@string/msg_hint"/>
+            android:hint="@string/msg_hint" />
 
         <Button
             android:id="@+id/send_msg_btn"
@@ -44,14 +59,4 @@
             android:layout_marginEnd="3dp"
             android:background="@drawable/ic_send_msg" />
     </RelativeLayout>
-
-    <ListView
-        android:id="@+id/messages_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chat_contact_name"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        />
 </androidx.constraintlayout.widget.ConstraintLayout>

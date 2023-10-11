@@ -37,9 +37,6 @@ class ContactActivity : BaseActivity() {
     companion object {
         private const val MAX_PHONE_NUMBER_LENGTH = 20
         private const val MAX_NAME_LENGTH = 30
-        const val SMS_READ_REQ = 1
-        const val SMS_RECEIVE_REQ = 2
-        const val SMS_SEND_REQ = 3
     }
 
 
@@ -199,11 +196,9 @@ class ContactActivity : BaseActivity() {
     }
 
     private fun getCheckedGender() : Gender =
-        Gender.valueOf(
-            findViewById<RadioButton>(genderRadioGroup.checkedRadioButtonId)
-                .text
-                .toString().uppercase()
-        )
+        genderRadioIdMap
+            .filterValues { it == genderRadioGroup.checkedRadioButtonId}.keys.first()
+
 
     private fun saveButtonOnClick() {
         try {
